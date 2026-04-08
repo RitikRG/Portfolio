@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { personalInfo } from '../data/portfolio';
 
 export default function Navbar() {
@@ -35,14 +35,9 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="nav-badge">
-          <span className="dot" />
-          Available for work
-        </div>
-
         <button
           className="nav-mobile-btn"
-          onClick={() => setMobileOpen((o) => !o)}
+          onClick={() => setMobileOpen((open) => !open)}
           aria-label="Toggle menu"
         >
           <span />

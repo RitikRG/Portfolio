@@ -1,15 +1,13 @@
-// Portfolio data — single source of truth
+// Portfolio data - single source of truth
 
 export const personalInfo = {
   name: 'Ritik Gupta',
   title: 'Full-Stack Dev. AI Systems Builder.',
   subtitle: 'Building production systems at the intersection of great UX and real AI. 3 internships. 1 agent live in the wild.',
-  heroLabel: 'Open to remote · Full-Stack + AI',
   location: 'New Delhi, India',
   email: 'ritik.mpm@gmail.com',
   github: 'https://github.com/RitikRG',
   linkedin: 'https://linkedin.com/in/RgRitik',
-  availableForWork: true,
 };
 
 export const stats = [
@@ -20,13 +18,13 @@ export const stats = [
 
 export const about = {
   paragraphs: [
-    "Final-year B.Voc Software Development student at Delhi University (Ramanujan College), currently interning as a Full Stack Developer at Vypzee. I build things that actually ship — ERP systems, AI agents, multi-tenant SaaS platforms.",
-    "Competitive programmer ranked in the Top 1% globally at TCS CodeVita Season 12. I care deeply about clean architecture, measurable impact, and developer experience.",
+    'Final-year B.Voc Software Development student at Delhi University (Ramanujan College), currently interning as a Full Stack Developer at Vypzee. I build things that actually ship - ERP systems, AI agents, multi-tenant SaaS platforms.',
+    'Competitive programmer ranked in the Top 1% globally at TCS CodeVita Season 12. I care deeply about clean architecture, measurable impact, and developer experience.',
   ],
 };
 
 export const featuredProject = {
-  tag: 'WHATSAPP · AI AGENT · LIVE IN PRODUCTION',
+  tag: 'WHATSAPP - AI AGENT - LIVE IN PRODUCTION',
   title: 'WhatsApp AI\nOrdering Agent',
   subtitle: 'Voice in, order placed. A 5-layer autonomous ordering system integrated into a full ERP.',
   liveUrl: 'https://rnr-erp.netlify.app',
@@ -39,6 +37,9 @@ export const featuredProject = {
     { icon: '⚙️', label: 'ERP Tools' },
     { icon: '🔊', label: 'ElevenLabs TTS' },
     { icon: '📱', label: 'Reply' },
+    { icon: '✅', label: 'Order Confirmation' },
+    { icon: '🛎️', label: 'Notify Shop' },
+    { icon: '🚚', label: 'Delivery' },
   ],
   featStats: [
     { label: 'TOOLS', value: '12', desc: 'Custom LLM tools in autonomous loop' },
@@ -50,33 +51,33 @@ export const featuredProject = {
 export const experiences = [
   {
     company: 'Vypzee',
-    date: 'Jan 2026 – Present',
+    date: 'Jan 2026 - Present',
     role: 'Full Stack Developer Intern',
     tags: ['React', 'TypeScript', 'Redux', 'Node.js', 'MySQL'],
     bullets: [
-      'Revamped UI for Malls and Shops modules — modern, responsive, aligned with design system',
-      'Architected an HLS-inspired image optimisation pipeline with container-aware bucketing via Sharp — serving correctly-sized images by viewport',
+      'Revamped UI for Malls and Shops modules - modern, responsive, aligned with design system',
+      'Architected an HLS-inspired image optimisation pipeline with container-aware bucketing via Sharp - serving correctly-sized images by viewport',
       'Built an App Visual Clone Builder enabling sales team to generate interactive demos on-the-fly with AI content population',
     ],
   },
   {
     company: 'Finsmart Softwares',
-    date: 'Jul 2025 – Nov 2025',
+    date: 'Jul 2025 - Nov 2025',
     role: 'Software Developer Intern',
     tags: ['React Native', 'Redux', 'PHP', 'MySQL'],
     bullets: [
-      ['Converted single-org ledger into a multi-tenant SaaS platform — ', '100+ clients onboarded', ' within the first month'],
+      ['Converted single-org ledger into a multi-tenant SaaS platform - ', '100+ clients onboarded', ' within the first month'],
       'Led development of a React Native Self-Ordering Kiosk with full backend API design and Redux state management',
       'Built Accounts and Manufacturing modules: transaction tracking, BOM creation, production scheduling, inventory management',
     ],
   },
   {
     company: 'Jobsify Job Portal',
-    date: 'Mar 2025 – Oct 2025',
+    date: 'Mar 2025 - Oct 2025',
     role: 'Web Developer',
     tags: ['Laravel', 'Tailwind CSS', 'MySQL'],
     bullets: [
-      ['Redesigned UI with Laravel Blade + Tailwind — ', '35% higher engagement', ', ', '50%+ more returning users'],
+      ['Redesigned UI with Laravel Blade + Tailwind - ', '35% higher engagement', ', ', '50%+ more returning users'],
       ['Achieved ', '60% improvement', ' in page load performance'],
       ['Built a custom VPS-based promotional mail system handling ', '90,000+ emails/month'],
     ],
@@ -115,33 +116,62 @@ export const skills = [
 
 export const projects = [
   {
-    featured: true,
-    category: 'PRODUCTION · ERP + AI AGENT',
+    category: 'PRODUCTION - ERP + AI AGENT',
     title: 'RNR ERP',
-    desc: 'Full-featured retail ERP covering inventory, billing, ledger, and reporting — plus a WhatsApp AI ordering agent with voice-in, order-placed capability. Live and in active production use.',
+    desc: 'Full-featured retail ERP covering inventory, billing, ledger, and reporting - plus a WhatsApp AI ordering agent with voice-in, order-placed capability. Live and in active production use.',
+    liveUrl: 'https://rnr-erp.netlify.app/',
+    hasLivePreview: true,
+    showInPrimaryGrid: true,
     tags: ['Angular', 'Node.js', 'MongoDB', { label: 'OpenRouter', ai: true }, { label: 'Twilio', ai: true }, { label: 'Whisper', ai: true }],
     links: [
-      { label: 'Live ↗', url: 'https://rnr-erp.netlify.app' },
-      { label: 'GitHub ↗', url: 'https://github.com/RitikRG' },
+      { label: 'Live ->', url: 'https://rnr-erp.netlify.app/' },
+      { label: 'GitHub ->', url: 'https://github.com/RitikRG' },
+    ],
+  },
+  {
+    category: 'RECRUITMENT PLATFORM',
+    title: 'Jobsfiy',
+    desc: 'Live recruitment platform focused on job discovery, employer outreach, and a cleaner application funnel for candidates and hiring teams.',
+    liveUrl: 'https://jobsfiy.com/',
+    hasLivePreview: true,
+    showInPrimaryGrid: true,
+    tags: ['Job Portal', 'Live Platform', 'Production'],
+    links: [
+      { label: 'Live ->', url: 'https://jobsfiy.com/' },
+    ],
+  },
+  {
+    category: 'HEALTHCARE WEBSITE',
+    title: 'RVibes',
+    desc: 'Live clinic website for RVibes Homoeopathy with service-led storytelling, trust signals, and conversion-focused contact pathways.',
+    liveUrl: 'https://rvibeshomoeopathy.com/',
+    hasLivePreview: true,
+    showInPrimaryGrid: true,
+    tags: ['Healthcare', 'Brand Website', 'Live'],
+    links: [
+      { label: 'Live ->', url: 'https://rvibeshomoeopathy.com/' },
     ],
   },
   {
     category: 'SOCIAL PLATFORM',
     title: 'RConnect',
     desc: 'College-exclusive platform for anonymous/public posts, polls, and reactions. Instagram-inspired feed with real-time sync via Supabase.',
-    tags: ['React', 'Redux', 'Supabase'],
+    hasLivePreview: false,
+    showInPrimaryGrid: false,
+    tags: ['React', 'Redux', 'Supabase', 'Under Construction'],
     links: [
-      { label: 'GitHub ↗', url: 'https://github.com/RitikRG' },
+      { label: 'GitHub ->', url: 'https://github.com/RitikRG' },
     ],
   },
   {
-    wip: true,
     category: 'VS CODE EXTENSION',
     title: 'repo-visualizer',
     desc: 'VS Code extension for visualising code structure and tech debt in vibe-coded projects. AST parsing via ts-morph + force-directed graph via D3.js inside a Webview panel.',
-    tags: ['TypeScript', 'ts-morph', 'D3.js', 'VS Code API'],
+    hasLivePreview: false,
+    showInPrimaryGrid: false,
+    tags: ['TypeScript', 'ts-morph', 'D3.js', 'VS Code API', 'Under Construction'],
     links: [
-      { label: 'GitHub ↗', url: 'https://github.com/RitikRG' },
+      { label: 'GitHub ->', url: 'https://github.com/RitikRG' },
     ],
   },
 ];
@@ -155,12 +185,12 @@ export const achievements = [
   {
     num: 'Runner-up',
     title: 'Overload++ DSA Competition',
-    sub: 'ANDC, Delhi University — competitive DSA contest',
+    sub: 'ANDC, Delhi University - competitive DSA contest',
   },
   {
     num: '9.41',
-    title: 'GPA — Delhi University',
-    sub: 'B.Voc. Software Development, Ramanujan College (2022–2027)',
+    title: 'GPA - Delhi University',
+    sub: 'B.Voc. Software Development, Ramanujan College (2022-2027)',
   },
 ];
 

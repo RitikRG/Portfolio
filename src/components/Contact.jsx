@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { personalInfo } from '../data/portfolio';
+import { useEffect, useRef } from "react";
+import { personalInfo } from "../data/portfolio";
 
 export default function Contact() {
   const sectionRef = useRef(null);
@@ -11,13 +11,13 @@ export default function Contact() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('visible');
+          if (e.isIntersecting) e.target.classList.add("visible");
         });
       },
       { threshold: 0.12 }
     );
 
-    section.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    section.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
@@ -25,15 +25,21 @@ export default function Contact() {
     <section className="contact-section" id="contact" ref={sectionRef}>
       <div className="container">
         <div className="contact-inner">
-          <div className="section-label reveal" style={{ justifyContent: 'center', display: 'flex' }}>
-            Open to work
+          <div
+            className="section-label reveal"
+            style={{ justifyContent: "center", display: "flex" }}
+          >
+            Open for Collaboration
           </div>
-          <h2 className="section-headline reveal reveal-delay-1" style={{ textAlign: 'center' }}>
-            Let's build<br />something.
+          <h2
+            className="section-headline reveal reveal-delay-1"
+            style={{ textAlign: "center" }}
+          >
+            Let's build
+            <br />
+            something.
           </h2>
-          <p className="reveal reveal-delay-2">
-            Remote-first. Open to US, EU, and AU early-stage startups. Graduating 2026.
-          </p>
+          <p className="reveal reveal-delay-2"></p>
           <a
             href={`mailto:${personalInfo.email}`}
             className="btn-primary reveal reveal-delay-3"
@@ -41,10 +47,20 @@ export default function Contact() {
             Send a message →
           </a>
           <div className="contact-links reveal reveal-delay-4">
-            <a href={personalInfo.linkedin} className="contact-link" target="_blank" rel="noreferrer">
+            <a
+              href={personalInfo.linkedin}
+              className="contact-link"
+              target="_blank"
+              rel="noreferrer"
+            >
               LinkedIn ↗
             </a>
-            <a href={personalInfo.github} className="contact-link" target="_blank" rel="noreferrer">
+            <a
+              href={personalInfo.github}
+              className="contact-link"
+              target="_blank"
+              rel="noreferrer"
+            >
               GitHub ↗
             </a>
             <a href={`mailto:${personalInfo.email}`} className="contact-link">
