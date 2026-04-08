@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { personalInfo } from '../data/portfolio';
 
-export default function Navbar() {
+export default function Navbar({ theme, onToggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -35,18 +35,36 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <button
-          className="nav-mobile-btn"
-          onClick={() => setMobileOpen((open) => !open)}
-          aria-label="Toggle menu"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className="nav-actions">
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={onToggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-pressed={theme === 'dark'}
+          >
+            <span className="theme-toggle-icon" aria-hidden="true">
+              <span className="theme-toggle-sun" />
+              <span className="theme-toggle-moon" />
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className="nav-mobile-btn"
+            onClick={() => setMobileOpen((open) => !open)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+            aria-controls="nav-mobile-menu"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </nav>
 
-      <div className={`nav-mobile-menu${mobileOpen ? ' open' : ''}`}>
+      <div className={`nav-mobile-menu${mobileOpen ? ' open' : ''}`} id="nav-mobile-menu">
         {links.map((l) => (
           <a key={l} onClick={() => scrollTo(l.toLowerCase())} href={`#${l.toLowerCase()}`}>
             {l}

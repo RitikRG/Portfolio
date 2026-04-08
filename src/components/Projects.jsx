@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { projects } from '../data/portfolio';
 import { useCardTilt } from '../hooks/useAnimations';
 
@@ -153,19 +154,15 @@ function ProjectCard({ project, delay, onOpen }) {
   return (
     <div
       className={`proj-card reveal reveal-delay-${delay}`}
-      onClick={openProject}
-      onKeyDown={(event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          openProject();
-        }
-      }}
-      role="button"
-      tabIndex={0}
-      aria-haspopup="dialog"
-      aria-label={`Open ${project.title} project details`}
       {...tilt}
     >
+      <button
+        type="button"
+        className="proj-card-trigger"
+        onClick={openProject}
+        aria-haspopup="dialog"
+        aria-label={`Open ${project.title} project details`}
+      />
       <div className="glare" />
       {!isUnderConstruction && <LivePreview project={project} />}
       <div className="proj-category">{project.category}</div>
@@ -234,103 +231,106 @@ export default function Projects() {
     };
   }, [selectedProject]);
 
-  return (
-    <section className="projects-section" id="projects" ref={sectionRef}>
-      <div className="container">
-        <div className="section-label reveal">Projects</div>
-        <h2 className="section-headline reveal reveal-delay-1">Things I&apos;ve built.</h2>
-
-        <div className="projects-grid primary-grid">
-          {primaryProjects.map((project, i) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              delay={i + 1}
-              onOpen={setSelectedProject}
-            />
-          ))}
-        </div>
-
+  const modalMarkup = selectedProject ? (
+    <div
+      className="project-modal-backdrop"
+      role="presentation"
+      onClick={(event) => {
+        if (event.target === event.currentTarget) setSelectedProject(null);
+      }}
+    >
+      <div
+        className="project-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-modal-title"
+      >
         <button
           type="button"
-          className="show-all-toggle reveal reveal-delay-4"
-          onClick={() => setIsShowAllOpen((open) => !open)}
-          aria-expanded={isShowAllOpen}
-          aria-controls="more-projects"
+          className="project-modal-close"
+          onClick={() => setSelectedProject(null)}
+          aria-label="Close project modal"
         >
-          {isShowAllOpen ? 'Show less' : 'Show all'}
-          <span>
-            {isShowAllOpen ? 'Hide the remaining 2 projects' : 'Reveal the remaining 2 projects'}
-          </span>
+          x
         </button>
 
-        {isShowAllOpen && (
-          <div className="projects-grid secondary-grid" id="more-projects">
-            {secondaryProjects.map((project) => (
+        {!isSelectedProjectUnderConstruction && (
+          <LivePreview key={selectedProject.title} project={selectedProject} interactive modal />
+        )}
+
+        <div className="project-modal-body">
+          <div className="proj-category">{selectedProject.category}</div>
+          <h3 className="proj-title" id="project-modal-title">
+            {selectedProject.title}
+          </h3>
+          <p className="proj-desc modal-desc">{selectedProject.desc}</p>
+          <TagList tags={selectedProject.tags} />
+          {selectedProjectLinks.length > 0 && (
+            <div className="proj-links modal-links">
+              {selectedProjectLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.url}
+                  className="proj-link"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  ) : null;
+
+  return (
+    <>
+      <section className="projects-section" id="projects" ref={sectionRef}>
+        <div className="container">
+          <div className="section-label reveal">Projects</div>
+          <h2 className="section-headline reveal reveal-delay-1">Things I&apos;ve built.</h2>
+
+          <div className="projects-grid primary-grid">
+            {primaryProjects.map((project, i) => (
               <ProjectCard
                 key={project.title}
                 project={project}
-                delay={1}
+                delay={i + 1}
                 onOpen={setSelectedProject}
               />
             ))}
           </div>
-        )}
-      </div>
 
-      {selectedProject && (
-        <div
-          className="project-modal-backdrop"
-          role="presentation"
-          onClick={(event) => {
-            if (event.target === event.currentTarget) setSelectedProject(null);
-          }}
-        >
-          <div
-            className="project-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="project-modal-title"
+          <button
+            type="button"
+            className="show-all-toggle reveal reveal-delay-4"
+            onClick={() => setIsShowAllOpen((open) => !open)}
+            aria-expanded={isShowAllOpen}
+            aria-controls="more-projects"
           >
-            <button
-              type="button"
-              className="project-modal-close"
-              onClick={() => setSelectedProject(null)}
-              aria-label="Close project modal"
-            >
-              x
-            </button>
+            {isShowAllOpen ? 'Show less' : 'Show all'}
+            <span>
+              {isShowAllOpen ? 'Hide the remaining 2 projects' : 'Reveal the remaining 2 projects'}
+            </span>
+          </button>
 
-            {!isSelectedProjectUnderConstruction && (
-              <LivePreview key={selectedProject.title} project={selectedProject} interactive modal />
-            )}
-
-            <div className="project-modal-body">
-              <div className="proj-category">{selectedProject.category}</div>
-              <h3 className="proj-title" id="project-modal-title">
-                {selectedProject.title}
-              </h3>
-              <p className="proj-desc modal-desc">{selectedProject.desc}</p>
-              <TagList tags={selectedProject.tags} />
-              {selectedProjectLinks.length > 0 && (
-                <div className="proj-links modal-links">
-                  {selectedProjectLinks.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.url}
-                      className="proj-link"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              )}
+          {isShowAllOpen && (
+            <div className="projects-grid secondary-grid" id="more-projects">
+              {secondaryProjects.map((project) => (
+                <ProjectCard
+                  key={project.title}
+                  project={project}
+                  delay={1}
+                  onOpen={setSelectedProject}
+                />
+              ))}
             </div>
-          </div>
+          )}
         </div>
-      )}
-    </section>
+      </section>
+      {modalMarkup && typeof document !== 'undefined' ? createPortal(modalMarkup, document.body) : null}
+    </>
   );
 }

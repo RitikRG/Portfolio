@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -14,6 +14,7 @@ const SPLASH_START_DELAY_MS = 500;
 const SPLASH_STEP_MS = 500;
 const SPLASH_TOTAL_MS = SPLASH_START_DELAY_MS + (SPLASH_STEP_MS * 10);
 const SPLASH_EXIT_MS = 700;
+const THEME_STORAGE_KEY = 'portfolio-theme';
 
 const splashGreetings = [
   { id: 'en', text: "Hello, I'm Ritik", dir: 'ltr' },
@@ -49,10 +50,21 @@ function SplashScreen({ greeting, isExiting }) {
   );
 }
 
-function AppShell() {
+function getInitialTheme() {
+  if (typeof window === 'undefined') return 'light';
+
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  if (storedTheme === 'light' || storedTheme === 'dark') {
+    return storedTheme;
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function AppShell({ theme, onToggleTheme }) {
   return (
     <>
-      <Navbar />
+      <Navbar theme={theme} onToggleTheme={onToggleTheme} />
       <main>
         <Hero />
         <About />
@@ -73,6 +85,7 @@ export default function App() {
   const [isSplashActive, setIsSplashActive] = useState(true);
   const [isSplashExiting, setIsSplashExiting] = useState(false);
   const [hasEnteredSite, setHasEnteredSite] = useState(false);
+  const [theme, setTheme] = useState(getInitialTheme);
 
   useEffect(() => {
     const greetingTimers = splashGreetings.map((_, index) =>
@@ -97,16 +110,26 @@ export default function App() {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  }, [theme]);
+
   const currentGreeting = useMemo(
     () => (greetingIndex >= 0 ? splashGreetings[Math.min(greetingIndex, splashGreetings.length - 1)] : null),
     [greetingIndex]
   );
 
+  const handleToggleTheme = () => {
+    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+  };
+
   return (
     <>
       {hasEnteredSite && (
         <div className={`app-shell${isSplashExiting ? ' is-entering' : ''}`}>
-          <AppShell />
+          <AppShell theme={theme} onToggleTheme={handleToggleTheme} />
         </div>
       )}
       {isSplashActive && <SplashScreen greeting={currentGreeting} isExiting={isSplashExiting} />}
