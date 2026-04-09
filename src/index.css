@@ -1480,6 +1480,43 @@ footer p {
     padding: 72px 20px;
   }
 
+  .hero {
+    padding: 112px 20px 72px;
+  }
+
+  .hero-content {
+    width: 100%;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 11vw, 46px);
+    max-width: 100%;
+  }
+
+  .hero-typing {
+    width: 100%;
+    gap: 0;
+  }
+
+  .hero-type-line {
+    width: auto;
+    max-width: 100%;
+    overflow: visible;
+    white-space: normal;
+    border-right: 0;
+    text-wrap: balance;
+    animation: none;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    max-width: 100%;
+  }
+
+  .hero-ctas {
+    margin-top: 36px;
+  }
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 32px;
